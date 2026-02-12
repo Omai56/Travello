@@ -9,6 +9,11 @@ import java.time.LocalTime;
  */
 
 public class ItineraryItem {
+    private LocalDate date;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private String location;
+    private String notes;
 
     // REQUIRES: date, startTime, endTime, location are not null;
     // MODIFIES: this
@@ -17,7 +22,14 @@ public class ItineraryItem {
     // and location; notes is set to null;
     // throws IllegalArgumentException if endTime is not strictly after startTime.
     public ItineraryItem(LocalDate date, LocalTime startTime, LocalTime endTime, String location) {
-        // stub
+        if (!endTime.isAfter(startTime)) {
+            throw new IllegalArgumentException("End time must be after start time.");
+        }
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.location = location;
+        this.notes = null;
     }
 
     // EFFECTS: returns true if this item conflicts with other.
@@ -25,68 +37,83 @@ public class ItineraryItem {
     // overlap.
     // If one item ends exactly when the other begins, they do NOT conflict.
     public boolean conflictsWith(ItineraryItem other) {
-        return false; // stub
+        if (!this.date.equals(other.date)) {
+            return false;
+        }
+        return this.startTime.isBefore(other.endTime) && this.endTime.isAfter(other.startTime);
     }
 
     // EFFECTS: returns the date of this itinerary item.
     public LocalDate getDate() {
-        return LocalDate.of(2000, 1, 1); // stub
+        return date;
     }
 
     // EFFECTS: returns the start time of this itinerary item.
     public LocalTime getStartTime() {
-        return LocalTime.of(0, 0); // stub
+        return startTime;
     }
 
     // EFFECTS: returns the end time of this itinerary item.
     public LocalTime getEndTime() {
-        return LocalTime.of(0, 0); // stub
+        return endTime;
     }
 
     // EFFECTS: returns the location of this itinerary item.
     public String getLocation() {
-        return ""; // stub
+        return location;
     }
 
     // EFFECTS: returns the notes of this itinerary item; may be null.
     public String getNotes() {
-        return null; // stub
+        return notes;
     }
 
     // MODIFIES: this
     // EFFECTS: sets this item's date to date.
     public void setDate(LocalDate date) {
-        // stub
+        this.date = date;
     }
 
     // MODIFIES: this
     // EFFECTS: sets this item's start time to startTime;
     // throws IllegalArgumentException if endTime is not strictly after startTime.
     public void setStartTime(LocalTime startTime) {
-        // stub
+        if (!endTime.isAfter(startTime)) {
+            throw new IllegalArgumentException("Start time must be before end time.");
+        }
+        this.startTime = startTime;
     }
 
     // MODIFIES: this
     // EFFECTS: sets this item's end time to endTime;
     // throws IllegalArgumentException if endTime is not strictly after startTime.
     public void setEndTime(LocalTime endTime) {
-        // stub
+        if (!endTime.isAfter(startTime)) {
+            throw new IllegalArgumentException("End time must be after start time.");
+        }
+        this.endTime = endTime;
     }
 
     // MODIFIES: this
     // EFFECTS: sets this item's location to location.
     public void setLocation(String location) {
-        // stub
+        this.location = location;
     }
 
     // MODIFIES: this
     // EFFECTS: sets this item's notes to notes (notes may be null).
     public void setNotes(String notes) {
-        // stub
+        this.notes = notes;
     }
 
     // EFFECTS: returns a formatted string representation of this itinerary item
     public String getDisplayItem() {
-        return ""; // stub
+        String result = "Date: " + date + "\n"
+                + "Time: " + startTime + "-" + endTime + "\n"
+                + "Location: " + location + "\n";
+        if (notes != null) {
+            result += "Notes: " + notes;
+        }
+        return result;
     }
 }
