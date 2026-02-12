@@ -84,4 +84,9 @@ public class ItineraryItem {
     public void setNotes(String notes) {
         // stub
     }
+
+    // EFFECTS: returns a formatted string representation of this itinerary item
+    public String getDisplayItem() {
+        return ""; // stub
+    }
 }
