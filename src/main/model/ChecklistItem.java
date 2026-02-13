@@ -12,41 +12,40 @@ public class ChecklistItem {
     // EFFECTS: creates a new checklist item with the given name and sets packed to
     // false.
     public ChecklistItem(String name) {
-        // stub
+        this.name = name;
+        this.packed = false;
     }
 
     // EFFECTS: returns the name of this checklist item.
     public String getName() {
-        // stub
-        return null;
-    }
-
-    // EFFECTS: returns true if this item has been packed, otherwise false.
-    public boolean getPacked() {
-        return false; // stub
+        return name;
     }
 
     // EFFECTS: returns true if this item is packed, false otherwise.
     public boolean isPacked() {
-        return false; // stub
+        return packed;
     }
 
     // MODIFIES: this
     // EFFECTS: sets this item’s packed status to true.
     public void markPacked() {
-        // stub
+        packed = true;
     }
 
     // MODIFIES: this
     // EFFECTS: sets this item’s packed status to false.
     public void markUnpacked() {
-        // stub
+        packed = false;
     }
 
     // EFFECTS: returns a String representation of this checklist item for display
     // in the UI,
     // including its name and packed status.
     public String getChecklistItem() {
-        return null; // stub
+        if (this.isPacked()) {
+            return "[X] " + name;
+        } else {
+            return "[ ] " + name;
+        }
     }
 }
