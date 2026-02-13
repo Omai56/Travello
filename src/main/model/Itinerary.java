@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -11,47 +10,56 @@ import java.util.List;
  */
 public class Itinerary {
 
-    // EFFECTS: constructs an empty itinerary with no items.
+    private List<ItineraryItem> items;
+
+    // EFFECTS: constructs an empty itinerary.
     public Itinerary() {
-        // stub
+        items = new ArrayList<>();
     }
 
     // MODIFIES: this
-    // EFFECTS: adds item to this itinerary if it does not conflict with an existing
-    // item;
-    // otherwise throws IllegalArgumentException and this itinerary is unchanged.
-    public void addItem(ItineraryItem item) {
-        // stub
+    // EFFECTS: adds item to this itinerary and returns true if it does not conflict
+    // with any
+    // existing item; otherwise does not add it and returns false.
+    public boolean addItem(ItineraryItem item) {
+        if (hasConflict(item)) {
+            return false;
+        }
+        items.add(item);
+        return true;
     }
 
     // EFFECTS: returns true if item conflicts with at least one existing item in
     // this itinerary;
     // returns false otherwise.
     public boolean hasConflict(ItineraryItem item) {
-        return false; // stub
+        for (ItineraryItem i : items) {
+            if (i.conflictsWith(item)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    // MODIFIES: this
-    // EFFECTS: removes the first itinerary item equal to item from this itinerary
-    // and returns true;
-    // if no such item exists, returns false and this itinerary is unchanged.
-    public boolean removeItem(ItineraryItem item) {
-        return false; // stub
-    }
-
-    // EFFECTS: returns an unmodifiable list of all itinerary items in this
-    // itinerary.
-    // Changes to the returned list are not allowed and do not affect this
-    // itinerary.
+    // EFFECTS: returns a list of all itinerary items in this itinerary.
     public List<ItineraryItem> getItems() {
-        return new ArrayList<>(); // stub
+        return items;
     }
 
-    // EFFECTS: returns a formatted String showing all itinerary items in this
-    // itinerary,
-    // one per line, in the current stored order.
-    // If there are no items, returns a message indicating the itinerary is empty.
+    // EFFECTS: returns a formatted string containing all itinerary items, one per
+    // line.
+    // If there are no items, returns "No itinerary items."
     public String printItinerary() {
-        return ""; // stub
+        if (items.size() == 0) {
+            return "No itinerary items.";
+        }
+
+        String result = "";
+        int count = 1;
+        for (ItineraryItem item : items) {
+            result += "Itinerary" + count + ": \n" + item.getDisplayItem() + "\n";
+            count++;
+        }
+        return result;
     }
 }
