@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestItinerary {
     private Itinerary itinerary;
-
     private LocalDate date;
     private ItineraryItem item1;
     private ItineraryItem item2;

@@ -34,7 +34,7 @@ public class Expense {
 
     // EFFECTS: returns the description of this expense; may be null.
     public String getDescription() {
-        return "";
+        return null;
     }
 
     // MODIFIES: this
