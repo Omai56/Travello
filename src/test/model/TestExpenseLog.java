@@ -64,7 +64,6 @@ public class TestExpenseLog {
         log.setBudget(100);
         log.addExpense(expense1);
         log.addExpense(expense2);
-
         assertTrue(log.isOverBudget());
     }
 
@@ -73,8 +72,16 @@ public class TestExpenseLog {
         log.setBudget(200);
         log.addExpense(expense1);
         log.addExpense(expense2);
-
         assertTrue(log.isNearBudget());
+    }
+
+    @Test
+    public void testGetRemainingBudget() {
+        log.setBudget(200);
+        assertEquals(200, log.getRemainingBudget());
+        log.addExpense(expense1);
+        assertEquals(150, log.getRemainingBudget());
+
     }
 
     @Test

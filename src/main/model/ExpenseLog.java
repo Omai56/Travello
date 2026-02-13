@@ -66,6 +66,11 @@ public class ExpenseLog {
         return budget > 0 && totalSpent() >= 0.9 * budget;
     }
 
+    // EFFECTS: return the remaining budget by budget - total spent
+    public double getRemainingBudget() {
+        return budget - totalSpent();
+    }
+
     // EFFECTS: returns a formatted string containing all expenses
     // in this expense log.
     // If there are no expenses, returns "No expenses."
