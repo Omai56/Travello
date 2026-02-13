@@ -1,7 +1,6 @@
 package ui;
 
 import model.*;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Scanner;
@@ -17,7 +16,6 @@ public class TravelloApp {
 
     public void run() {
         System.out.println("Welcome to Travello!");
-
         System.out.print("Enter trip name: ");
         String name = input.nextLine();
         trip = new Trip(name);
@@ -237,8 +235,8 @@ public class TravelloApp {
     private void markChecklistPacked() {
         try {
             System.out.println(trip.getChecklist().getChecklistString());
-            System.out.print("Enter index to mark packed: ");
-            int idx = Integer.parseInt(input.nextLine().trim());
+            System.out.print("Enter index to mark packed(start with 1): ");
+            int idx = Integer.parseInt(input.nextLine().trim()) - 1;
 
             // If your Checklist class doesn’t have markItemPacked yet, do it via the list:
             // trip.getChecklist().getChecklist().get(idx).markPacked();

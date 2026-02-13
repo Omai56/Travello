@@ -54,7 +54,7 @@ public class Itinerary {
             return "No itinerary items.";
         }
 
-        String result = "";
+        String result = "\n";
         int count = 1;
         for (ItineraryItem item : items) {
             result += "Itinerary" + count + ": \n" + item.getDisplayItem() + "\n";
