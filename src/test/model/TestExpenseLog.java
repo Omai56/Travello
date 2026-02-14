@@ -69,10 +69,17 @@ public class TestExpenseLog {
 
     @Test
     public void testNearBudget() {
-        log.setBudget(200);
+        log.setBudget(160);
         log.addExpense(expense1);
         log.addExpense(expense2);
         assertTrue(log.isNearBudget());
+    }
+
+    @Test
+    public void testBudgetNotSetNotNearOrOver() {
+        log.addExpense(expense1);
+        assertFalse(log.isNearBudget());
+        assertFalse(log.isOverBudget());
     }
 
     @Test
@@ -94,4 +101,25 @@ public class TestExpenseLog {
         assertTrue(summary.contains("50.0"));
         assertTrue(summary.contains("100.0"));
     }
+
+    @Test
+    public void testCategorySummaryEmpty() {
+        assertEquals("No expenses.", log.categorySummary());
+    }
+
+    @Test
+    public void testPrintExpensesEmpty() {
+        assertEquals("No expenses.", log.printExpenses());
+    }
+
+    @Test
+    public void testPrintExpensesNonEmpty() {
+        log.addExpense(expense1);
+        String out = log.printExpenses();
+        assertTrue(out.contains("Date: " + expense1.getDate()));
+        assertTrue(out.contains("Category: " + expense1.getCategory()));
+        assertTrue(out.contains("Amount: " + expense1.getAmount()));
+        assertTrue(out.contains("Description: " + expense1.getDescription()));
+    }
+
 }

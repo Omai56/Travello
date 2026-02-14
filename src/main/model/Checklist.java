@@ -73,7 +73,7 @@ public class Checklist {
 
     // EFFECTS: returns a String containing all unpacked items in the order they
     // appear in the checklist.
-    // If there are no unpacked items, returns null.
+    // If there are no unpacked items, returns empty string.
     public String getUnpackedItems() {
         String result = "";
         for (ChecklistItem i : items) {
@@ -86,7 +86,7 @@ public class Checklist {
 
     // EFFECTS: returns a String containing all packed items in the order they
     // appear in the checklist.
-    // If there are no packed items, returns null.
+    // If there are no packed items, returns empty string.
     public String getPackedItems() {
         String result = "";
         for (ChecklistItem i : items) {

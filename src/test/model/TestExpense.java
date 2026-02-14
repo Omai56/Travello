@@ -29,7 +29,7 @@ public class TestExpense {
     public void testConstructorInvalidAmount() {
         boolean exceptionThrown = false;
         try {
-            new Expense(date, 0, ExpenseCategory.FOOD, "Invalid");
+            new Expense(date, -1, ExpenseCategory.FOOD, "Invalid");
         } catch (IllegalArgumentException e) {
             exceptionThrown = true;
         }

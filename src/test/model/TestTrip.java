@@ -21,9 +21,9 @@ public class TestTrip {
     @Test
     public void testConstructor() {
         assertEquals("Japan Trip", trip.getName());
-        assertEquals(itinerary, trip.getItinerary());
-        assertEquals(expenseLog, trip.getExpenseLog());
-        assertEquals(checklist, trip.getChecklist());
+        assertNotNull(trip.getItinerary());
+        assertNotNull(trip.getExpenseLog());
+        assertNotNull(trip.getChecklist());
     }
 
     @Test

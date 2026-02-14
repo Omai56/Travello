@@ -7,14 +7,10 @@ import java.util.ArrayList;
 
 public class TestChecklist {
     private Checklist checklist;
-    private ChecklistItem item1;
-    private ChecklistItem item2;
 
     @BeforeEach
     public void setup() {
         checklist = new Checklist();
-        item1 = new ChecklistItem("Passport");
-        item2 = new ChecklistItem("Clothes");
     }
 
     @Test
@@ -30,8 +26,8 @@ public class TestChecklist {
 
         ArrayList<ChecklistItem> items = checklist.getChecklist();
         assertEquals(2, items.size());
-        assertEquals(item1, items.get(0));
-        assertEquals(item2, items.get(1));
+        assertEquals("Passport", items.get(0).getName());
+        assertEquals("Clothes", items.get(1).getName());
     }
 
     @Test
@@ -46,6 +42,7 @@ public class TestChecklist {
 
     @Test
     public void testAllPacked() {
+        assertFalse(checklist.allPacked());
         checklist.addItem("Passport");
         checklist.addItem("Clothes");
         ArrayList<ChecklistItem> items = checklist.getChecklist();
@@ -74,5 +71,16 @@ public class TestChecklist {
         assertTrue(checklist.isFull());
         assertEquals(Checklist.MAX_ITEMS, checklist.getChecklist().size());
 
+    }
+
+    @Test
+    public void testgetChecklistString() {
+        assertEquals("No checklist items.", checklist.getChecklistString());
+        checklist.addItem("Passport");
+        checklist.addItem("Clothes");
+
+        String output = checklist.getChecklistString();
+        assertTrue(output.contains("Passport"));
+        assertTrue(output.contains("Clothes"));
     }
 }
