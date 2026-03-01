@@ -57,7 +57,8 @@ public class ExpenseLog {
     // EFFECTS: returns true if budget > 0 and totalSpent() > budget;
     // returns false otherwise.
     public boolean isOverBudget() {
-        return budget > 0 && totalSpent() > budget;
+        Boolean overBudget = budget > 0 && totalSpent() > budget;
+        return overBudget;
     }
 
     // EFFECTS: returns true if budget > 0 and totalSpent() >= 90% of budget;

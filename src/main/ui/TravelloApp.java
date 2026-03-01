@@ -45,6 +45,8 @@ public class TravelloApp {
         System.out.println("i -> Itinerary");
         System.out.println("e -> Expenses");
         System.out.println("c -> Checklist");
+        System.out.println("s -> Save trip to file");
+        System.out.println("l -> Load trip from file");
         System.out.println("q -> Quit");
         System.out.print("Choose: ");
     }
@@ -250,5 +252,16 @@ public class TravelloApp {
         } catch (Exception e) {
             System.out.println("Invalid index.");
         }
+    }
+
+    // EFFECTS: saves the trip to file
+    private void saveTrip() {
+        // stub
+    }
+
+    // MODIFIES: this
+    // EFFECTS: load the trip from file
+    private void loadTrip() {
+        // stub
     }
 }
