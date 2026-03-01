@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -8,7 +11,7 @@ import java.time.LocalTime;
  * Each item has a date, start time, end time, location, and optional notes.
  */
 
-public class ItineraryItem {
+public class ItineraryItem implements Writable {
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
@@ -115,5 +118,20 @@ public class ItineraryItem {
             result += "Notes: " + notes;
         }
         return result;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("date", date.toString());
+        json.put("startTime", startTime.toString());
+        json.put("endTime", endTime.toString());
+        json.put("location", location);
+
+        if (notes != null) {
+            json.put("notes", notes);
+        }
+
+        return json;
     }
 }

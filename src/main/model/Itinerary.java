@@ -1,5 +1,9 @@
 package model;
 
+import org.json.JSONObject;
+import org.json.JSONArray;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +12,7 @@ import java.util.List;
  * Provides operations to add and view itinerary items, and to detect scheduling
  * conflicts.
  */
-public class Itinerary {
+public class Itinerary implements Writable {
 
     private List<ItineraryItem> items;
 
@@ -61,5 +65,23 @@ public class Itinerary {
             count++;
         }
         return result;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("items", itemsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns items in this Itinerary as a JSON array
+    private JSONArray itemsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (ItineraryItem item : items) {
+            jsonArray.put(item.toJson());
+        }
+
+        return jsonArray;
     }
 }
