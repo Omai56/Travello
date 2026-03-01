@@ -1,0 +1,38 @@
+{
+    "expenseLog": {
+        "budget": 0,
+        "expenses": [
+            {
+                "date": "2025-03-01",
+                "amount": 100,
+                "description": "Lunch",
+                "category": "FOOD"
+            },
+            {
+                "date": "2025-03-02",
+                "amount": 50,
+                "category": "TRANSPORT"
+            }
+        ]
+    },
+    "name": "Vacation",
+    "itinerary": {"items": [
+        {
+            "date": "2025-07-01",
+            "notes": "Bring sunscreen",
+            "startTime": "09:00",
+            "location": "Beach",
+            "endTime": "12:00"
+        },
+        {
+            "date": "2025-07-02",
+            "startTime": "10:00",
+            "location": "Museum",
+            "endTime": "13:00"
+        }
+    ]},
+    "checklist": {"items": [{
+        "name": "Passport",
+        "packed": true
+    }]}
+}

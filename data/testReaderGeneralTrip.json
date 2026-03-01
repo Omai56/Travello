@@ -1,7 +1,21 @@
 {
     "name": "Vacation",
     "itinerary": {
-        "items": []
+        "items": [
+            {
+                "date": "2025-07-01",
+                "startTime": "09:00",
+                "endTime": "12:00",
+                "location": "Beach",
+                "notes": "Bring sunscreen"
+            },
+            {
+                "date": "2025-07-02",
+                "startTime": "10:00",
+                "endTime": "13:00",
+                "location": "Museum"
+            }
+        ]
     },
     "expenseLog": {
         "budget": 0,
@@ -11,6 +25,11 @@
                 "amount": 100.0,
                 "category": "FOOD",
                 "description": "Lunch"
+            },
+            {
+                "date": "2025-03-02",
+                "amount": 50.0,
+                "category": "FOOD"
             }
         ]
     },
@@ -18,6 +37,10 @@
         "items": [
             {
                 "name": "Passport",
+                "packed": true
+            },
+            {
+                "name": "Clothes",
                 "packed": false
             }
         ]
