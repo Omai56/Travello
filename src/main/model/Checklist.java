@@ -1,5 +1,9 @@
 package model;
 
+import org.json.JSONObject;
+import org.json.JSONArray;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 /**
@@ -7,7 +11,7 @@ import java.util.ArrayList;
  * A checklist stores up to MAX_ITEMS ChecklistItem objects.
  * Items can be added, and the checklist can report packed/unpacked items.
  */
-public class Checklist {
+public class Checklist implements Writable {
 
     public static final int MAX_ITEMS = 50;
     private ArrayList<ChecklistItem> items;
@@ -95,5 +99,23 @@ public class Checklist {
             }
         }
         return result;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("items", itemsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns items in this Checklist as a JSON array
+    private JSONArray itemsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (ChecklistItem item : items) {
+            jsonArray.put(item.toJson());
+        }
+
+        return jsonArray;
     }
 }

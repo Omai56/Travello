@@ -1,10 +1,13 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 /**
  * Represents a single item in a travel checklist.
  * A checklist item has a name and a packed/unpacked status.
  */
-public class ChecklistItem {
+public class ChecklistItem implements Writable {
 
     private String name;
     private boolean packed;
@@ -47,5 +50,13 @@ public class ChecklistItem {
         } else {
             return "[ ] " + name;
         }
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("packed", packed);
+        return json;
     }
 }
