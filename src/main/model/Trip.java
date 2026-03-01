@@ -1,10 +1,13 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 /**
  * Represents a single trip.
  * A trip contains an itinerary, an expense log, and a checklist.
  */
-public class Trip {
+public class Trip implements Writable {
     private String name;
     private Itinerary itinerary;
     private ExpenseLog expenseLog;
@@ -44,5 +47,15 @@ public class Trip {
     // EFFECTS: returns the checklist associated with this trip.
     public Checklist getChecklist() {
         return checklist;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("itinerary", itinerary.toJson());
+        json.put("expenseLog", expenseLog.toJson());
+        json.put("checklist", checklist.toJson());
+        return json;
     }
 }
