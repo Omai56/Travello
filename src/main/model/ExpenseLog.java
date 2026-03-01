@@ -1,5 +1,9 @@
 package model;
 
+import org.json.JSONObject;
+import org.json.JSONArray;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +11,7 @@ import java.util.List;
  * Represents a log of expenses for a trip.
  * Stores multiple Expense objects and tracks total spending and budget status.
  */
-public class ExpenseLog {
+public class ExpenseLog implements Writable {
 
     private List<Expense> expenses;
     private double budget;
@@ -109,5 +113,24 @@ public class ExpenseLog {
             result += c + ": " + total + "\n";
         }
         return result;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("budget", budget);
+        json.put("expenses", expensesToJson());
+        return json;
+    }
+
+    // EFFECTS: returns expenses in this ExpenseLog as a JSON array
+    private JSONArray expensesToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Expense e : expenses) {
+            jsonArray.put(e.toJson());
+        }
+
+        return jsonArray;
     }
 }

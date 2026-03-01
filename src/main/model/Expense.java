@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.time.LocalDate;
 
 /**
@@ -7,7 +10,7 @@ import java.time.LocalDate;
  * Each expense has a date, a positive amount, a category, and an optional
  * description.
  */
-public class Expense {
+public class Expense implements Writable {
     private LocalDate date;
     private double amount;
     private ExpenseCategory category;
@@ -73,5 +76,18 @@ public class Expense {
     // EFFECTS: sets the description of this expense to description (may be null).
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("date", date.toString());
+        json.put("amount", amount);
+        json.put("category", category.toString());
+        if (description != null) {
+            json.put("description", description);
+        }
+
+        return json;
     }
 }
