@@ -248,7 +248,7 @@ public class TravelloApp {
     private void addChecklistItem() {
         System.out.print("Item name: ");
         String name = input.nextLine();
-        trip.getChecklist().addItem(name);
+        trip.getChecklist().addItem(new ChecklistItem(name));
         System.out.println("Item added.");
     }
 

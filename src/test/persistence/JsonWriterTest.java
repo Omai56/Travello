@@ -45,7 +45,7 @@ class JsonWriterTest extends JsonTest {
         try {
             Trip trip = new Trip("Vacation");
 
-            trip.getChecklist().addItem("Passport");
+            trip.getChecklist().addItem(new ChecklistItem("Passport"));
 
             trip.getExpenseLog().addExpense(
                     new Expense(java.time.LocalDate.now(), 100,

@@ -21,8 +21,8 @@ public class TestChecklist {
 
     @Test
     public void testAddItem() {
-        checklist.addItem("Passport");
-        checklist.addItem("Clothes");
+        checklist.addItem(new ChecklistItem("Passport"));
+        checklist.addItem(new ChecklistItem("Clothes"));
 
         ArrayList<ChecklistItem> items = checklist.getChecklist();
         assertEquals(2, items.size());
@@ -33,18 +33,18 @@ public class TestChecklist {
     @Test
     public void testAddItemWhenFull() {
         for (int i = 0; i < Checklist.MAX_ITEMS; i++) {
-            checklist.addItem("Item" + i);
+            checklist.addItem(new ChecklistItem("Item" + i));
         }
         assertTrue(checklist.isFull());
-        checklist.addItem("ExtraItem");
+        checklist.addItem(new ChecklistItem("ExtraItem"));
         assertEquals(Checklist.MAX_ITEMS, checklist.getChecklist().size());
     }
 
     @Test
     public void testAllPacked() {
         assertFalse(checklist.allPacked());
-        checklist.addItem("Passport");
-        checklist.addItem("Clothes");
+        checklist.addItem(new ChecklistItem("Passport"));
+        checklist.addItem(new ChecklistItem("Clothes"));
         ArrayList<ChecklistItem> items = checklist.getChecklist();
         assertFalse(checklist.allPacked());
         items.get(0).markPacked();
@@ -54,8 +54,8 @@ public class TestChecklist {
 
     @Test
     public void testPackedAndUnpackedStrings() {
-        checklist.addItem("Passport");
-        checklist.addItem("Clothes");
+        checklist.addItem(new ChecklistItem("Passport"));
+        checklist.addItem(new ChecklistItem("Clothes"));
         ArrayList<ChecklistItem> items = checklist.getChecklist();
         items.get(0).markPacked();
         assertTrue(checklist.getPackedItems().contains("Passport"));
@@ -66,7 +66,7 @@ public class TestChecklist {
     public void testIsFull() {
         assertFalse(checklist.isFull());
         for (int i = 0; i < Checklist.MAX_ITEMS; i++) {
-            checklist.addItem("Item " + i);
+            checklist.addItem(new ChecklistItem("Item " + i));
         }
         assertTrue(checklist.isFull());
         assertEquals(Checklist.MAX_ITEMS, checklist.getChecklist().size());
@@ -76,8 +76,8 @@ public class TestChecklist {
     @Test
     public void testgetChecklistString() {
         assertEquals("No checklist items.", checklist.getChecklistString());
-        checklist.addItem("Passport");
-        checklist.addItem("Clothes");
+        checklist.addItem(new ChecklistItem("Passport"));
+        checklist.addItem(new ChecklistItem("Clothes"));
 
         String output = checklist.getChecklistString();
         assertTrue(output.contains("Passport"));

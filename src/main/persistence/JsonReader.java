@@ -117,7 +117,7 @@ public class JsonReader {
                 item.markPacked();
             }
 
-            trip.getChecklist().addItem(name);
+            trip.getChecklist().addItem(item);
         }
     }
 

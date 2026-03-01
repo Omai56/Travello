@@ -25,9 +25,9 @@ public class Checklist implements Writable {
     // EFFECTS: adds a new checklist item with the given name.
     // The new item is initially not packed.
     // If the checklist is full, this method does nothing.
-    public void addItem(String name) {
+    public void addItem(ChecklistItem item) {
         if (!isFull()) {
-            items.add(new ChecklistItem(name));
+            items.add(item);
         }
     }
 
