@@ -6,16 +6,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestTrip {
     private Trip trip;
-    private Itinerary itinerary;
-    private ExpenseLog expenseLog;
-    private Checklist checklist;
 
     @BeforeEach
     public void setup() {
         trip = new Trip("Japan Trip");
-        itinerary = new Itinerary();
-        expenseLog = new ExpenseLog();
-        checklist = new Checklist();
     }
 
     @Test

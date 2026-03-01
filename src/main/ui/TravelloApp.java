@@ -33,6 +33,10 @@ public class TravelloApp {
                 doExpenseMenu();
             } else if (command.equals("c")) {
                 doChecklistMenu();
+            } else if (command.equals("s")) {
+                saveTrip();
+            } else if (command.equals("l")) {
+                loadTrip();
             } else {
                 System.out.println("Invalid option.");
             }
