@@ -1,0 +1,25 @@
+{
+    "name": "Vacation",
+    "itinerary": {
+        "items": []
+    },
+    "expenseLog": {
+        "budget": 0,
+        "expenses": [
+            {
+                "date": "2025-03-01",
+                "amount": 100.0,
+                "category": "FOOD",
+                "description": "Lunch"
+            }
+        ]
+    },
+    "checklist": {
+        "items": [
+            {
+                "name": "Passport",
+                "packed": false
+            }
+        ]
+    }
+}

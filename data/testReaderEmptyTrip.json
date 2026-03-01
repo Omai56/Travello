@@ -1,0 +1,13 @@
+{
+    "name": "My Trip",
+    "itinerary": {
+        "items": []
+    },
+    "expenseLog": {
+        "budget": 0,
+        "expenses": []
+    },
+    "checklist": {
+        "items": []
+    }
+}
