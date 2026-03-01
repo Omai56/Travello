@@ -1,24 +1,31 @@
 package ui;
 
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Scanner;
 
 public class TravelloApp {
 
+    private static final String JSON_STORE = "./data/trip.json";
     private Scanner input;
     private Trip trip;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     public TravelloApp() {
         input = new Scanner(System.in);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
     }
 
     public void run() {
-        System.out.println("Welcome to Travello!");
-        System.out.print("Enter trip name: ");
-        String name = input.nextLine();
-        trip = new Trip(name);
+        initializeTrip();
 
         boolean keepGoing = true;
         while (keepGoing) {
@@ -42,6 +49,13 @@ public class TravelloApp {
             }
         }
         System.out.println("Thank you for using Travello!");
+    }
+
+    private void initializeTrip() {
+        System.out.println("Welcome to Travello!");
+        System.out.print("Enter trip name: ");
+        String name = input.nextLine();
+        trip = new Trip(name);
     }
 
     private void displayMainMenu() {
@@ -260,12 +274,24 @@ public class TravelloApp {
 
     // EFFECTS: saves the trip to file
     private void saveTrip() {
-        // stub
+        try {
+            jsonWriter.open();
+            jsonWriter.write(trip);
+            jsonWriter.close();
+            System.out.println("Saved " + trip.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
     }
 
     // MODIFIES: this
     // EFFECTS: load the trip from file
     private void loadTrip() {
-        // stub
+        try {
+            trip = jsonReader.read();
+            System.out.println("Loaded " + trip.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 }
