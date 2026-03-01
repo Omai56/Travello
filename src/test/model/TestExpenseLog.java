@@ -78,6 +78,7 @@ public class TestExpenseLog {
     @Test
     public void testBudgetNotSetNotNearOrOver() {
         log.addExpense(expense1);
+        log.setBudget(200);
         assertFalse(log.isNearBudget());
         assertFalse(log.isOverBudget());
     }

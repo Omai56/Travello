@@ -58,17 +58,16 @@ public class ExpenseLog implements Writable {
         return budget;
     }
 
-    // EFFECTS: returns true if budget > 0 and totalSpent() > budget;
+    // EFFECTS: returns true if totalSpent() > budget;
     // returns false otherwise.
     public boolean isOverBudget() {
-        Boolean overBudget = budget > 0 && totalSpent() > budget;
-        return overBudget;
+        return totalSpent() > budget;
     }
 
-    // EFFECTS: returns true if budget > 0 and totalSpent() >= 90% of budget;
+    // EFFECTS: returns true if totalSpent() >= 90% of budget;
     // returns false otherwise.
     public boolean isNearBudget() {
-        return budget > 0 && totalSpent() >= 0.9 * budget;
+        return totalSpent() >= 0.9 * budget;
     }
 
     // EFFECTS: return the remaining budget by budget - total spent
