@@ -42,8 +42,6 @@ public class TravelloApp {
                 doChecklistMenu();
             } else if (command.equals("s")) {
                 saveTrip();
-            } else if (command.equals("l")) {
-                loadTrip();
             } else {
                 System.out.println("Invalid option.");
             }
@@ -53,6 +51,25 @@ public class TravelloApp {
 
     private void initializeTrip() {
         System.out.println("Welcome to Travello!");
+        System.out.print("Do you want to load an existing trip? (y/n): ");
+        String choice = input.nextLine().trim().toLowerCase();
+
+        if (choice.equals("y")) {
+            loadTrip();
+
+            // If loading failed and trip is still null,
+            // create a new trip instead
+            if (trip == null) {
+                System.out.println("Creating a new trip instead.");
+                createNewTrip();
+            }
+
+        } else {
+            createNewTrip();
+        }
+    }
+
+    private void createNewTrip() {
         System.out.print("Enter trip name: ");
         String name = input.nextLine();
         trip = new Trip(name);
@@ -64,7 +81,6 @@ public class TravelloApp {
         System.out.println("e -> Expenses");
         System.out.println("c -> Checklist");
         System.out.println("s -> Save trip to file");
-        System.out.println("l -> Load trip from file");
         System.out.println("q -> Quit");
         System.out.print("Choose: ");
     }
@@ -289,9 +305,10 @@ public class TravelloApp {
     private void loadTrip() {
         try {
             trip = jsonReader.read();
-            System.out.println("Loaded " + trip.getName() + " from " + JSON_STORE);
+            System.out.println("Loaded " + trip.getName());
         } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
+            System.out.println("Unable to read from file.");
+            trip = null;
         }
     }
 }
