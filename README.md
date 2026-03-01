@@ -29,3 +29,5 @@ This application is designed for travelers who want a simple and organized way t
 - As a user, I want to be able to add an item to my travel checklist.  
 - As a user, I want to be able to view the list of items in my travel checklist.  
 - As a user, I want to be able to mark a checklist item as packed.  
+- As a user, I want to have the option to save the entire state of my trip to file.
+- As a user, I want to have the option to load the entire state of my previously saved trip and resume exactly as it was when I last saved it.
