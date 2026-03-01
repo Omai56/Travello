@@ -13,7 +13,7 @@ public class JsonWriter {
 
     // EFFECTS: constructs writer to write to destination file
     public JsonWriter(String destination) {
-        // stub
+        this.destination = destination;
     }
 
     // MODIFIES: this
@@ -21,24 +21,25 @@ public class JsonWriter {
     // cannot
     // be opened for writing
     public void open() throws FileNotFoundException {
-        // stub
+        writer = new PrintWriter(new File(destination));
     }
 
     // MODIFIES: this
     // EFFECTS: writes JSON representation of workroom to file
     public void write(Trip trip) {
-        // stub
+        JSONObject json = trip.toJson();
+        saveToFile(json.toString(TAB));
     }
 
     // MODIFIES: this
     // EFFECTS: closes writer
     public void close() {
-        // stub
+        writer.close();
     }
 
     // MODIFIES: this
     // EFFECTS: writes string to file
     private void saveToFile(String json) {
-        // stub
+        writer.print(json);
     }
 }
