@@ -18,8 +18,8 @@ import java.io.IOException;
 public class TravelloGUI extends JFrame {
 
     private Trip currentTrip;
-    private DefaultListModel<String> listModel;
-    private JList<String> list;
+    private JPanel itineraryPanel;
+    private JLabel titleLabel;
     private JTextField dateField;
     private JTextField startField;
     private JTextField endField;
@@ -32,7 +32,6 @@ public class TravelloGUI extends JFrame {
     // EFFECTS: constructs a new TravelPlannerGUI with an empty trip, initializes
     // all graphical components
     public TravelloGUI() {
-        currentTrip = new Trip("My Trip");
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
 
@@ -42,9 +41,12 @@ public class TravelloGUI extends JFrame {
         BackgroundPanel backgroundPanel = new BackgroundPanel("./data/Background.jpg");
         backgroundPanel.setLayout(new BorderLayout());
         setContentPane(backgroundPanel);
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        currentTrip = new Trip("My Trip");
         initializeComponents();
+        initializeTrip();
+        refreshList();
         setVisible(true);
     }
 
@@ -57,48 +59,73 @@ public class TravelloGUI extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes and adds the input panel with labels, text fields, and
-    // the add button to the top of the GUI.
+    // EFFECTS: initializes and adds the top panel of the GUI.
     private void initializeInputPanel() {
-        JPanel inputPanel = new JPanel(new GridLayout(2, 5, 5, 5));
-        inputPanel.setOpaque(false);
+        JPanel topPanel = new JPanel(new BorderLayout(0, 10));
+        topPanel.setOpaque(false);
+
+        titleLabel = new JLabel("Welcome to " + currentTrip.getName() + "!", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
+        topPanel.add(titleLabel, BorderLayout.NORTH);
+
+        JPanel fieldsPanel = new JPanel(new GridLayout(2, 5, 5, 5));
+        fieldsPanel.setOpaque(false);
 
         dateField = new JTextField();
         startField = new JTextField();
         endField = new JTextField();
         locationField = new JTextField();
 
+        fieldsPanel.add(new JLabel("Date (YYYY-MM-DD):"));
+        fieldsPanel.add(new JLabel("Start (HH:MM):"));
+        fieldsPanel.add(new JLabel("End (HH:MM):"));
+        fieldsPanel.add(new JLabel("Location:"));
+        fieldsPanel.add(new JLabel(""));
+
+        addFieldInputs(fieldsPanel);
+
+        topPanel.add(fieldsPanel, BorderLayout.CENTER);
+        add(topPanel, BorderLayout.NORTH);
+    }
+
+    // MODIFIES: panel
+    // EFFECTS: adds the input text fields and add button to the given panel.
+    private void addFieldInputs(JPanel panel) {
         JButton addButton = new JButton("Add Item");
         addButton.addActionListener(e -> addItem());
 
-        inputPanel.add(new JLabel("Date (YYYY-MM-DD):"));
-        inputPanel.add(new JLabel("Start (HH:MM):"));
-        inputPanel.add(new JLabel("End (HH:MM):"));
-        inputPanel.add(new JLabel("Location:"));
-        inputPanel.add(new JLabel(""));
-
-        inputPanel.add(dateField);
-        inputPanel.add(startField);
-        inputPanel.add(endField);
-        inputPanel.add(locationField);
-        inputPanel.add(addButton);
-
-        add(inputPanel, BorderLayout.NORTH);
+        panel.add(dateField);
+        panel.add(startField);
+        panel.add(endField);
+        panel.add(locationField);
+        panel.add(addButton);
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes and adds the itinerary list display to the center of the
-    // GUI.
+    // EFFECTS: initializes and adds the itinerary display panel to the center of
+    // the GUI.
     private void initializeListPanel() {
-        listModel = new DefaultListModel<>();
-        list = new JList<>(listModel);
+        itineraryPanel = new JPanel();
+        itineraryPanel.setLayout(new BoxLayout(itineraryPanel, BoxLayout.Y_AXIS));
+        itineraryPanel.setOpaque(false);
 
-        JScrollPane scrollPane = new JScrollPane(list);
+        JScrollPane scrollPane = new JScrollPane(itineraryPanel);
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
-        list.setOpaque(false);
+        scrollPane.setBorder(null);
 
-        add(scrollPane, BorderLayout.CENTER);
+        JLabel itineraryLabel = new JLabel("Itinerary");
+        itineraryLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
+        itineraryLabel.setForeground(Color.BLACK);
+
+        JPanel centerPanel = new JPanel(new BorderLayout());
+        centerPanel.setOpaque(false);
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(10, 12, 10, 12));
+
+        centerPanel.add(itineraryLabel, BorderLayout.NORTH);
+        centerPanel.add(scrollPane, BorderLayout.CENTER);
+
+        add(centerPanel, BorderLayout.CENTER);
     }
 
     // MODIFIES: this
@@ -108,7 +135,7 @@ public class TravelloGUI extends JFrame {
         JPanel panel = new JPanel();
         panel.setOpaque(false);
 
-        JButton removeButton = new JButton("Remove Selected");
+        JButton removeButton = new JButton("Remove Item");
         JButton saveButton = new JButton("Save");
         JButton loadButton = new JButton("Load");
 
@@ -155,26 +182,72 @@ public class TravelloGUI extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: removes the selected itinerary item from the current trip
-    // if one is selected, and updates the displayed list.
+    // EFFECTS: asks the user for an item number to remove; removes that itinerary
+    // item if the number is valid and updates the displayed itinerary;
+    // otherwise shows an error message.
     private void removeItem() {
-        int index = list.getSelectedIndex();
+        String input = JOptionPane.showInputDialog(this, "Enter item number to remove:");
 
-        if (index >= 0) {
-            currentTrip.getItinerary().getItems().remove(index);
-            refreshList();
+        if (input == null) {
+            return;
+        }
+
+        try {
+            int number = Integer.parseInt(input.trim());
+            int index = number - 1;
+
+            if (index >= 0 && index < currentTrip.getItinerary().getItems().size()) {
+                currentTrip.getItinerary().getItems().remove(index);
+                refreshList();
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid item number.");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid number.");
         }
     }
 
     // MODIFIES: this
-    // EFFECTS: updates the displayed list so that it shows all itinerary
-    // items currently stored in the current trip.
+    // EFFECTS: updates the displayed itinerary so that each itinerary item is shown
+    // in its own numbered box.
     private void refreshList() {
-        listModel.clear();
+        itineraryPanel.removeAll();
 
+        int count = 1;
         for (ItineraryItem item : currentTrip.getItinerary().getItems()) {
-            listModel.addElement(item.getDisplayItem());
+            itineraryPanel.add(createItemBox(item, count));
+            itineraryPanel.add(Box.createVerticalStrut(10));
+            count++;
         }
+
+        itineraryPanel.revalidate();
+        itineraryPanel.repaint();
+    }
+
+    // EFFECTS: returns a panel displaying the given itinerary item in a numbered
+    // box.
+    private JPanel createItemBox(ItineraryItem item, int number) {
+        JPanel panel = new JPanel();
+        panel.setOpaque(true);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBackground(new Color(255, 255, 255, 220));
+        panel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.GRAY, 1),
+                BorderFactory.createEmptyBorder(10, 12, 10, 12)));
+
+        JLabel itemLabel = new JLabel("Item " + number);
+        itemLabel.setFont(new Font("SansSerif", Font.BOLD, 14));
+
+        JLabel locationLabel = new JLabel(item.getLocation());
+        JLabel dateLabel = new JLabel(item.getDate().toString());
+        JLabel timeLabel = new JLabel(item.getStartTime() + " - " + item.getEndTime());
+
+        panel.add(itemLabel);
+        panel.add(locationLabel);
+        panel.add(dateLabel);
+        panel.add(timeLabel);
+
+        return panel;
     }
 
     private void saveTrip() {
@@ -191,10 +264,41 @@ public class TravelloGUI extends JFrame {
     private void loadTrip() {
         try {
             currentTrip = jsonReader.read();
+            if (titleLabel != null) {
+                titleLabel.setText("Welcome to " + currentTrip.getName() + "!");
+            }
             refreshList();
             JOptionPane.showMessageDialog(this, "Trip loaded successfully.");
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Unable to load trip.");
+            e.printStackTrace();
+        }
+    }
+
+    private void initializeTrip() {
+        String[] options = { "Create New Trip", "Load Trip" };
+
+        int choice = JOptionPane.showOptionDialog(
+                this,
+                "Welcome to Travello",
+                "Start",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]);
+
+        if (choice == 1) {
+            loadTrip();
+            if (currentTrip == null) {
+                currentTrip = new Trip("My Trip");
+            }
+        } else {
+            String tripName = JOptionPane.showInputDialog(this, "Enter trip name:");
+            if (tripName == null || tripName.trim().isEmpty()) {
+                tripName = "My Trip";
+            }
+            currentTrip = new Trip(tripName.trim());
         }
     }
 }
