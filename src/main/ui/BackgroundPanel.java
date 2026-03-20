@@ -16,5 +16,7 @@ public class BackgroundPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        g.setColor(new Color(255, 255, 255, 60));
+        g.fillRect(0, 0, getWidth(), getHeight());
     }
 }
