@@ -2,11 +2,15 @@ package ui;
 
 import model.Trip;
 import model.ItineraryItem;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 // Represents the graphical user interface (GUI) for the Travello application.
 // Allows the user to view and manage the itinerary of a single trip.
@@ -21,12 +25,18 @@ public class TravelloGUI extends JFrame {
     private JTextField endField;
     private JTextField locationField;
 
+    private static final String JSON_STORE = "./data/trip.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
     // EFFECTS: constructs a new TravelPlannerGUI with an empty trip, initializes
     // all graphical components
     public TravelloGUI() {
         currentTrip = new Trip("My Trip");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
 
-        setTitle("Travel Planner");
+        setTitle("Travello");
         setSize(900, 600);
 
         BackgroundPanel backgroundPanel = new BackgroundPanel("./data/Background.jpg");
@@ -99,9 +109,16 @@ public class TravelloGUI extends JFrame {
         panel.setOpaque(false);
 
         JButton removeButton = new JButton("Remove Selected");
+        JButton saveButton = new JButton("Save");
+        JButton loadButton = new JButton("Load");
+
         removeButton.addActionListener(e -> removeItem());
+        saveButton.addActionListener(e -> saveTrip());
+        loadButton.addActionListener(e -> loadTrip());
 
         panel.add(removeButton);
+        panel.add(saveButton);
+        panel.add(loadButton);
         add(panel, BorderLayout.SOUTH);
     }
 
@@ -157,6 +174,27 @@ public class TravelloGUI extends JFrame {
 
         for (ItineraryItem item : currentTrip.getItinerary().getItems()) {
             listModel.addElement(item.getDisplayItem());
+        }
+    }
+
+    private void saveTrip() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(currentTrip);
+            jsonWriter.close();
+            JOptionPane.showMessageDialog(this, "Trip saved successfully.");
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(this, "Unable to save trip.");
+        }
+    }
+
+    private void loadTrip() {
+        try {
+            currentTrip = jsonReader.read();
+            refreshList();
+            JOptionPane.showMessageDialog(this, "Trip loaded successfully.");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Unable to load trip.");
         }
     }
 }
