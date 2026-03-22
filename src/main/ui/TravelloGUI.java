@@ -175,10 +175,8 @@ public class TravelloGUI extends JFrame {
 
     // MODIFIES: this
     // EFFECTS: prompts the user for itinerary item information, tries to add new
-    // item to the current trip.
-    // If the item conflicts with an existing item or the input is invalid, shows a
-    // message to the user.
-
+    // item to the current trip. If the item conflicts with an existing item or the
+    // input is invalid, shows a message to the user.
     private void addItem() {
         try {
             ItineraryItem item = getItemFromUser();
@@ -200,6 +198,8 @@ public class TravelloGUI extends JFrame {
         }
     }
 
+    // EFFECTS: prompts user for itinerary item information, and allow user to input
+    // data.
     private ItineraryItem getItemFromUser() {
         String dateStr = JOptionPane.showInputDialog(this, "Enter date (YYYY-MM-DD):");
         if (dateStr == null) {
@@ -293,6 +293,9 @@ public class TravelloGUI extends JFrame {
         return panel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: saves the current trip to file and shows a message dialog indicating
+    // whether the save was successful.
     private void saveTrip() {
         try {
             jsonWriter.open();
@@ -304,6 +307,9 @@ public class TravelloGUI extends JFrame {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads a trip from file, updates the title and itinerary display,
+    // and shows a message dialog indicating whether the load was successful.
     private void loadTrip() {
         try {
             currentTrip = jsonReader.read();
@@ -316,24 +322,23 @@ public class TravelloGUI extends JFrame {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: updates the welcome title label so that it displays the current
+    // trip name.
     private void updateTitle() {
         if (titleLabel != null) {
             titleLabel.setText("Welcome to " + currentTrip.getName() + "!");
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: asks the user whether to create a new trip or load an existing trip;
+    // creates a new trip with the entered name or loads a trip from file.
     private void initializeTrip() {
         String[] options = { "Create New Trip", "Load Trip" };
 
-        int choice = JOptionPane.showOptionDialog(
-                this,
-                "Welcome to Travello",
-                "Start",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                options,
-                options[0]);
+        int choice = JOptionPane.showOptionDialog(this, "Welcome to Travello!", "Start",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
         if (choice == 1) {
             loadTrip();
