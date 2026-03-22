@@ -18,7 +18,7 @@ This application is designed for travelers who want a simple and organized way t
 
 ---
 
-## User Stories
+# User Stories
 
 - As a user, I want to be able to add an itinerary item to my trip (date, time, duration, and location).  
 - As a user, I want to be able to view the list of itinerary items for my trip.  
@@ -31,3 +31,18 @@ This application is designed for travelers who want a simple and organized way t
 - As a user, I want to be able to mark a checklist item as packed.  
 - As a user, I want to have the option to save the entire state of my trip to file.
 - As a user, I want to have the option to load the entire state of my previously saved trip and resume exactly as it was when I last saved it.
+
+
+# Instructions for End User
+
+- You can view the panel that displays the itinerary items that have already been added to the trip by looking at the "Itinerary" section in the main application window.
+
+- You can generate the first required action related to the user story "adding multiple itinerary items to a trip" by clicking the "+ Add Itinerary" button, entering the date, start time, end time, and location in the pop-up window, and then clicking "OK".
+
+- You can generate the second required action related to the user story "adding multiple itinerary items to a trip" by clicking the "Remove Item" button at the bottom of the window, entering the item number you want to remove in the pop-up window, and then clicking "OK".
+
+- You can locate my visual component by opening the application and looking at the travel-themed images displayed in the main application window, including the background image and the welcome GIF that appears when the application starts.
+
+- You can save the state of my application by clicking the "Save" button at the bottom of the window.
+
+- You can reload the state of my application by clicking the "Load" button at the bottom of the window.
