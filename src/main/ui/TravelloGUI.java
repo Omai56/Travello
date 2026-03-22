@@ -82,12 +82,14 @@ public class TravelloGUI extends JFrame {
         itineraryPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 15));
         itineraryPanel.setOpaque(false);
 
-        JLabel itineraryLabel = new JLabel("Itinerary");
-        itineraryLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
+        JLabel itineraryLabel = new JLabel("    Itinerary");
+        itineraryLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
         itineraryLabel.setForeground(Color.BLACK);
         itineraryLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JButton addButton = new JButton("+ Add Itinerary");
+        addButton.setPreferredSize(new Dimension(155, 40));
+        addButton.setFont(new Font("SansSerif", Font.PLAIN, 15));
         addButton.addActionListener(e -> addItem());
 
         JScrollPane scrollPane = new JScrollPane(itineraryPanel);
@@ -136,6 +138,10 @@ public class TravelloGUI extends JFrame {
         JButton removeButton = new JButton("Remove Item");
         JButton saveButton = new JButton("Save");
         JButton loadButton = new JButton("Load");
+
+        removeButton.setPreferredSize(new Dimension(120, 40));
+        saveButton.setPreferredSize(new Dimension(100, 40));
+        loadButton.setPreferredSize(new Dimension(100, 40));
 
         removeButton.addActionListener(e -> removeItem());
         saveButton.addActionListener(e -> saveTrip());
