@@ -1,9 +1,14 @@
 package ui;
 
 import model.Trip;
+import model.Event;
+import model.EventLog;
 import model.ItineraryItem;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,6 +50,12 @@ public class TravelloGUI extends JFrame {
         refreshList();
         setVisible(true);
         showWelcomeGif();
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                printEventLog();
+            }
+        });
     }
 
     // MODIFIES: this
@@ -246,7 +257,7 @@ public class TravelloGUI extends JFrame {
             int index = number - 1;
 
             if (index >= 0 && index < currentTrip.getItinerary().getItems().size()) {
-                currentTrip.getItinerary().getItems().remove(index);
+                currentTrip.getItinerary().removeItem(index);
                 refreshList();
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid item number.");
@@ -358,6 +369,12 @@ public class TravelloGUI extends JFrame {
             }
             currentTrip = new Trip(tripName.trim());
             updateTitle();
+        }
+    }
+
+    private void printEventLog() {
+        for (Event event : EventLog.getInstance()) {
+            System.out.println(event.toString());
         }
     }
 }

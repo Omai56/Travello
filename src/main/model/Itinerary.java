@@ -30,7 +30,17 @@ public class Itinerary implements Writable {
             return false;
         }
         items.add(item);
+
+        EventLog.getInstance().logEvent(new Event("Added itinerary item: " + item.getLocation() + " on "
+                + item.getDate() + " from " + item.getStartTime() + " to " + item.getEndTime()));
         return true;
+    }
+
+    public void removeItem(int index) {
+        ItineraryItem removed = items.remove(index);
+
+        EventLog.getInstance().logEvent(new Event("Removed itinerary item: " + removed.getLocation() + " on "
+                + removed.getDate() + " from " + removed.getStartTime() + " to " + removed.getEndTime()));
     }
 
     // EFFECTS: returns true if item conflicts with at least one existing item in
