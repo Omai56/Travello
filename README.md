@@ -60,3 +60,12 @@ Added itinerary item: Richmond on 2000-12-12 from 13:00 to 14:00
 
 Sun Mar 29 10:46:58 PDT 2026  
 Removed itinerary item: Paris on 2000-01-01 from 12:00 to 13:00
+
+
+## Phase 4: Task 3
+
+This UML diagram shows the overall structure of my Travello application, this includes the model, persistence, and UI parts. The Trip class is the main part of the program and it contains things like the itinerary, checklist, and expense log. The diagram also shows how the GUI and console app both work with Trip and the JSON reader and writer classes.
+
+If I had more time, one thing I would improve is the duplication between TravelloApp and TravelloGUI. Right now, both of them create and manage their own Trip, JsonReader, and JsonWriter, and some of the logic is repeated. I think it would be better to move that shared logic into a separate class so both versions can reuse it.
+
+I would also improve TravelloGUI by splitting it into smaller parts. At the moment, it handles too many things like layout, user input, updating the screen, and startup logic. If I break it into smaller classes, this would make the code cleaner and easier to understand.
