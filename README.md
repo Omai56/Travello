@@ -46,3 +46,17 @@ This application is designed for travelers who want a simple and organized way t
 - You can save the state of my application by clicking the "Save" button at the bottom of the window.
 
 - You can reload the state of my application by clicking the "Load" button at the bottom of the window.
+
+
+## Phase 4: Task 2
+
+Below is a representative sample of the events that occur when the program runs:
+
+Sun Mar 29 10:46:30 PDT 2026  
+Added itinerary item: Paris on 2000-01-01 from 12:00 to 13:00
+
+Sun Mar 29 10:46:53 PDT 2026  
+Added itinerary item: Richmond on 2000-12-12 from 13:00 to 14:00
+
+Sun Mar 29 10:46:58 PDT 2026  
+Removed itinerary item: Paris on 2000-01-01 from 12:00 to 13:00
